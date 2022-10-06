@@ -1,4 +1,5 @@
 <RCC>
-    <qresource prefix="TodoList">
+    <qresource prefix="/TodoList">
+        <file>add_item.png</file>
     </qresource>
 </RCC>

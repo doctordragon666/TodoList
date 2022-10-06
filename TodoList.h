@@ -19,6 +19,10 @@ public:
     ~TodoList();
     bool loadfile();
     void initlayout();
+    void savefile();
+private slots:
+    void on_btn_add_clicked();
+
 private:
     Ui::TodoListClass ui;
     QStringList m_todo_list;
@@ -26,4 +30,5 @@ private:
     QFile* m_src;
     const QString m_filename = "./data.txt";
     QVBoxLayout* m_layout;
+
 };

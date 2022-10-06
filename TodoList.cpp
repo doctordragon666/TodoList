@@ -7,6 +7,9 @@ TodoList::TodoList(QWidget *parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
+    QFont font;
+    font.setPointSize(12);
+    setFont(font);
 
     //菜单栏控制
 
@@ -21,7 +24,7 @@ TodoList::TodoList(QWidget *parent)
     //加载主文件
     
 
-    //初始化右边的菜单
+    //初始化左边的菜单
     QStringList list_content = { "查看代办","养成习惯" };
     for (int i=0; i< ui.list_choose->count();i++)
     {
@@ -33,13 +36,16 @@ TodoList::TodoList(QWidget *parent)
         note_font.setPointSize(15);
         note->setFont(note_font);
         note->setToolTip(list_content[i]);
+        note->setTextAlignment(Qt::AlignCenter);
     }
 
     //获取下边的菜单
     m_layout = ui.centralWidget->findChild<QVBoxLayout*>("list_layout");
+    ui.list_layout->setAlignment(Qt::AlignTop);
     initlayout();
 
     //获取上面的菜单
+
 
     //关联按钮
 
@@ -53,7 +59,12 @@ TodoList::TodoList(QWidget *parent)
     ui.mainToolBar->setSizePolicy(size);
 
     //确定缩放条
-   
+    //QWidget* widContainer = new QWidget();
+    //widContainer->setLayout(ui.main_layout);
+    //QScrollArea* box = new QScrollArea();
+    //box->setWidget(widContainer);
+    //box->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
+    //widContainer->show();
 }
 
 TodoList::~TodoList()
@@ -71,14 +82,17 @@ bool TodoList::loadfile()
     }
 
     QString Line;
+    QString todo;
     //刻度可写文件
     if (m_src->open(QIODevice::ReadWrite | QIODevice::Text))
     {
         QTextStream stream(m_src);
+        stream.setCodec("utf-8"); 
         while (!stream.atEnd())
         {
             Line = stream.readLine();
-            
+            todo = Line.split(",")[1];
+            m_todo_list.push_back(todo);
         }
         m_src->close();
         return true;
@@ -90,7 +104,33 @@ bool TodoList::loadfile()
 
 void TodoList::initlayout()
 {
-    ListItem* lst_1 = new ListItem();
-    m_layout->addWidget(lst_1);
-    ui.list_layout->addWidget(lst_1);
+    ListItem* todo_item = nullptr;
+    for (int i = 0; i < m_todo_list.size(); i++)
+    {
+        todo_item = new ListItem;
+        todo_item->set_lbl_content(m_todo_list[i]);
+        m_layout->addWidget(todo_item);
+    }
+}
+
+void TodoList::savefile()
+{
+    QString s;
+    for (int i = 0; i < m_todo_list.size(); i++)
+    {
+        
+    }
+}
+
+void TodoList::on_btn_add_clicked()
+{
+    QString content = QInputDialog::getText(this, "提示", "请输入代办事项");
+    if (content.isEmpty())
+    {
+        return;
+    }
+    ListItem* item = new ListItem();
+    item->set_lbl_content(content);
+    m_layout->addWidget(item);
+    
 }
