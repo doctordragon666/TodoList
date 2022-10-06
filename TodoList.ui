@@ -26,8 +26,8 @@
    <property name="styleSheet">
     <string notr="true">background-color: rgba(255, 245, 247, 100);</string>
    </property>
-   <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
      <layout class="QGridLayout" name="main_layout" rowstretch="1,6" columnstretch="1,6">
       <item row="0" column="0" rowspan="2">
        <widget class="QListWidget" name="list_choose">
@@ -87,6 +87,30 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;   
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {background-color: #3e8e41}
+
+QPushButton:pressed {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}</string>
+          </property>
           <property name="text">
            <string>add</string>
           </property>
@@ -99,7 +123,24 @@
        </layout>
       </item>
       <item row="1" column="1">
-       <layout class="QVBoxLayout" name="list_layout"/>
+       <widget class="QScrollArea" name="list_item">
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="widgetResizable">
+         <bool>true</bool>
+        </property>
+        <widget class="QWidget" name="Content">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>613</width>
+           <height>325</height>
+          </rect>
+         </property>
+        </widget>
+       </widget>
       </item>
      </layout>
     </item>

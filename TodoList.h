@@ -22,7 +22,7 @@ public:
     void savefile();
 private slots:
     void on_btn_add_clicked();
-
+    void sure_del();
 private:
     Ui::TodoListClass ui;
     QStringList m_todo_list;
