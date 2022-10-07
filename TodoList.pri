@@ -4,7 +4,6 @@
 
 # This is a reminder that you are using a generated .pro file.
 # Remove it when you are finished editing this file.
-message("You are running qmake on a generated .pro file. This may not work!")
 
 
 HEADERS += ./stdafx.h \
@@ -20,3 +19,4 @@ FORMS += ./Hobby.ui \
     ./ListItem.ui \
     ./TodoList.ui
 RESOURCES += TodoList.qrc
+QT += widgets

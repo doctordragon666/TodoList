@@ -1,6 +1,10 @@
 #pragma once
 
 #include <QWidget>
+#include <qlayout.h>
+#include <qstring.h>
+#include <qfile.h>
+
 #include "ui_ListItem.h"
 
 class ListItem : public QWidget

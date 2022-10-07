@@ -77,5 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="data.txt" />
+    <Text Include="hobby.txt" />
+    <Text Include="record.txt" />
   </ItemGroup>
 </Project>

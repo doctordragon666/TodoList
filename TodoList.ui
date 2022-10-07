@@ -31,6 +31,9 @@
      <layout class="QGridLayout" name="main_layout" rowstretch="1,6" columnstretch="1,6">
       <item row="0" column="0" rowspan="2">
        <widget class="QListWidget" name="list_choose">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="spacing">
          <number>4</number>
         </property>

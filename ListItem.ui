@@ -27,7 +27,7 @@ border-bottom: 2px solid red;    /*为设置顶部边框 width style color 的�
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="9,1,1,1">
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="9,1,1">
      <property name="spacing">
       <number>12</number>
      </property>
@@ -62,64 +62,6 @@ border-bottom: 2px solid red;    /*为设置顶部边框 width style color 的�
        </property>
        <property name="text">
         <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btn_mark">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton
-{
-    color:#ffffff; /*文字颜色*/
-    background-color:qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop:0 #aa55ff, stop: 1 #1296db);/*背景色*/
-    border-style:outset; /*边框风格*/
-    border-width:2px;/*边框宽度*/
-    border-color:#0055ff; /*边框颜色*/
-    border-radius:10px; /*边框倒角*/
-    font:bold 14px; /*字体*/
-    font-family: Segoe UI;
-    min-width:100px;/*控件最小宽度*/
-    min-height:20px;/*控件最小高度*/
-    padding:4px;/*内边距*/
-}
- 
-QPushButton:hover
-{
-    color:#ffffff; /*文字颜色*/
-    background-color:qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop:0 #ff55ff, stop: 1 #1296db);/*背景色*/
-    border-style:outset; /*边框风格*/
-    border-width:2px;/*边框宽度*/
-    border-color:#0055ff; /*边框颜色*/
-    border-radius:10px; /*边框倒角*/
-    font:bold 14px; /*字体*/
-    font-family: Segoe UI;
-    min-width:100px;/*控件最小宽度*/
-    min-height:20px;/*控件最小高度*/
-    padding:4px;/*内边距*/
-}
-QPushButton:pressed
-{
-    color:#ffffff; /*文字颜色*/
-    background-color:qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop:0 #ff55ff, stop: 1 #aa00ff);/*背景色*/
-    border-style:outset; /*边框风格*/
-    border-width:2px;/*边框宽度*/
-    border-color:#0055ff; /*边框颜色*/
-    border-radius:10px; /*边框倒角*/
-    font:bold 14px; /*字体*/
-    font-family: Segoe UI;
-    min-width:100px;/*控件最小宽度*/
-    min-height:20px;/*控件最小高度*/
-    padding:4px;/*内边距*/
-}</string>
-       </property>
-       <property name="text">
-        <string>置顶</string>
        </property>
       </widget>
      </item>
