@@ -88,7 +88,7 @@ bool TodoList::loadfile(QFile*& file,QStringList& contain)
     QStringList Line;
     QString item;
     //刻度可写文件
-    if (file->open(QIODevice::ReadWrite | QIODevice::Text))
+    if (file->open(QIODevice::ReadOnly | QIODevice::Text))
     {
         QTextStream stream(file);
         stream.setCodec("utf-8"); 
@@ -171,6 +171,7 @@ void TodoList::savefile(QFile*& file, QStringList& contain, int flag)
 {
     QString s;
     file->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate);
+    m_record->open(QIODevice::Append | QIODevice::Text);
     QTextStream stream(file);
     stream.setCodec("utf-8");
     stream.setFieldAlignment(QTextStream::AlignLeft);
@@ -191,7 +192,7 @@ void TodoList::savefile(QFile*& file, QStringList& contain, int flag)
                 QTextStream record_s(m_record);
                 record_s.setCodec("utf-8");
                 record_s.setFieldAlignment(QTextStream::AlignLeft);
-                record_s << m_record_list.size() << m_hobby_line[i].m_hobby << "\n";
+                record_s << m_record_list.size() << "," << m_hobby_line[i].m_hobby << "\n";
             }
         }
     }
@@ -251,15 +252,23 @@ void TodoList::on_btn_add_clicked()
         }
         QStringList way = content.split(",");
         Hobby* item = new Hobby(m_layout);
-        item->set_hobby(content);
         item->set_process(0);
-        if (way.size() < 1)
+        if (way.size() <= 1)
+        {
+            item->set_hobby(content);
             item->set_target(21);
+            m_hobby_list.push_back(content);
+            m_hobby_line.push_back(hobby_line(content, 21, 0));
+        }
         else
+        {
+            item->set_hobby(way[0]);
             item->set_target(way[1].toInt());
-
+            m_hobby_list.push_back(way[0]);
+            m_hobby_line.push_back(hobby_line(way[0], way[1].toInt(), 0));
+        }
+        
         //保存并更新布局
-        m_hobby_list.push_back(content);
         m_layout->addWidget(item);
         savefile(m_hobby, m_hobby_list, 2);
     }
