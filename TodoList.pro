@@ -16,3 +16,4 @@ UI_DIR += .
 RCC_DIR += .
 include(TodoList.pri)
 win32:RC_FILE = TodoList.rc
+RC_ICONS = TodoLists.ICON

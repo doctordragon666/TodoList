@@ -92,10 +92,8 @@
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton {
-  display: inline-block;
   padding: 15px 25px;
   font-size: 24px;
-  cursor: pointer;
   text-align: center;   
   text-decoration: none;
   outline: none;
@@ -103,15 +101,12 @@
   background-color: #4CAF50;
   border: none;
   border-radius: 15px;
-  box-shadow: 0 9px #999;
 }
 
 QPushButton:hover {background-color: #3e8e41}
 
 QPushButton:pressed {
   background-color: #3e8e41;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
 }</string>
           </property>
           <property name="text">
@@ -164,7 +159,14 @@ QPushButton:pressed {
     </property>
     <addaction name="action_save"/>
    </widget>
+   <widget class="QMenu" name="achievement">
+    <property name="title">
+     <string>内容</string>
+    </property>
+    <addaction name="action_success"/>
+   </widget>
    <addaction name="menu"/>
+   <addaction name="achievement"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -181,6 +183,11 @@ QPushButton:pressed {
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="action_success">
+   <property name="text">
+    <string>查看成就</string>
    </property>
   </action>
  </widget>
