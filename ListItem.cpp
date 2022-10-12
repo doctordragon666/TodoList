@@ -25,7 +25,7 @@ QString ListItem::get_lbl_content()
 
 void ListItem::on_btn_add_clicked()
 {
-	QString content = QInputDialog::getText(this, "提示", "重命名待办为");
+	QString content = QInputDialog::getText(this, "提示", "重命名待办为", QLineEdit::Normal, this->get_lbl_content());
 	if (content.isEmpty())
 	{
 		return;
