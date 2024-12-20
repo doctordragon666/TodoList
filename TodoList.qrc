@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/TodoList">
-        <file>add_item.png</file>
+    <qresource prefix="/src">
+        <file alias="addIcon">add_item.png</file>
     </qresource>
 </RCC>

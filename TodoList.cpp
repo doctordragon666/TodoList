@@ -7,25 +7,22 @@ TodoList::TodoList(QWidget* parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-    //setWindowIcon(QIcon("D:/C primer plus/TodoList/TodoList.ico"));
 
-	//全局字体设置
+	//全局字体设置，这里也属于失误，样式不应该和代码耦合在一起。
 	QFont font;
 	font.setPointSize(12);
 	font.setBold(true);
 	setFont(font);
 
-	//窗口置顶
+	//窗口置顶，WA_TranslucentBackground设置背景为半透明
 	Qt::WindowFlags m_flags = windowFlags();
 	setWindowFlags(m_flags | Qt::WindowStaysOnTopHint);
 	setAttribute(Qt::WA_TranslucentBackground);
 
-	//菜单栏控制
-
-	//加载待办和习惯文件
-	m_src = new QFile(m_filename);
-	m_hobby = new QFile(m_hobby_file);
-	m_record = new QFile(m_record_file);
+	//加载待办，习惯和记录文件
+	m_src = new QFile(TODO_FILE);
+	m_hobby = new QFile(HOBBY_FILE);
+	m_record = new QFile(RECORD_FILE);
 	if (!loadfile(m_src, m_todo_list) || !loadfile(m_hobby, m_hobby_list) || !loadfile(m_record, m_record_list))
 	{
 		QMessageBox::information(NULL, "提示", "请重启程序");
@@ -36,7 +33,7 @@ TodoList::TodoList(QWidget* parent)
 	connect(ui.action_save, SIGNAL(triggered()), this, SLOT(sure_del()));
 	connect(ui.action_success, SIGNAL(triggered()), this, SLOT(show_success()));
 
-	//初始化左边的菜单
+	//初始化左边的菜单项的样式
 	for (int i = 0; i < ui.list_choose->count(); i++)
 	{
 		QListWidgetItem* note = ui.list_choose->item(i);
@@ -50,18 +47,12 @@ TodoList::TodoList(QWidget* parent)
 		note->setTextAlignment(Qt::AlignCenter);
 	}
 
-	//获取下边的内容
+	// 初始化内容（待办习惯）布局
 	m_layout = new QVBoxLayout;
 	m_layout->setAlignment(Qt::AlignTop);
 	initlayout(0);//默认初始化待办
 	ui.Content->setLayout(m_layout);
 	ui.list_item->setWidget(ui.Content);
-
-	//获取上面的菜单
-
-
-	//关联按钮
-
 
 	//设置窗口自定义伸缩
 	QSizePolicy size(QSizePolicy::Preferred, QSizePolicy::Expanding);
@@ -69,19 +60,23 @@ TodoList::TodoList(QWidget* parent)
 	ui.menuBar->setSizePolicy(size);
 	ui.menu->setSizePolicy(size);
 	ui.mainToolBar->setSizePolicy(size);
-
-	//确定缩放条
 }
 
 TodoList::~TodoList()
-{}
+{
+	delete m_src;
+	delete m_hobby;
+	delete m_record;
+
+	delete m_layout;
+}
 
 bool TodoList::loadfile(QFile*& file, QStringList& contain)
 {
 	//判断文件是否存在
-	if(!file->exists())
+	if (!file->exists())
 	{
-        qDebug() << "file not exist\n";
+		qDebug() << "file not exist\n";
 		file->open(QIODevice::WriteOnly | QIODevice::Text);
 		file->close();
 		return false;
@@ -89,7 +84,7 @@ bool TodoList::loadfile(QFile*& file, QStringList& contain)
 
 	QStringList Line;
 	QString item;
-	//刻度可写文件
+	//可读可写文件
 	if (file->open(QIODevice::ReadOnly | QIODevice::Text))
 	{
 		QTextStream stream(file);
@@ -111,8 +106,8 @@ bool TodoList::loadfile(QFile*& file, QStringList& contain)
 	{
 		qDebug() << "file is open failed" << strerror(errno) << "file size is " << file->size() << endl;
 		file->close();
+		return false;
 	}
-	return true;
 }
 
 void TodoList::initlayout(int choose)
@@ -123,7 +118,7 @@ void TodoList::initlayout(int choose)
 		ListItem* todo_item = nullptr;
 		for (int i = 0; i < m_todo_list.size(); i++)
 		{
-			todo_item = new ListItem(m_layout);
+			todo_item = new ListItem;
 			todo_item->set_lbl_content(m_todo_list[i]);
 			m_layout->addWidget(todo_item);
 		}
@@ -133,11 +128,10 @@ void TodoList::initlayout(int choose)
 		Hobby* hobby_item = nullptr;
 		for (int i = 0; i < m_hobby_list.size(); i++)
 		{
-			hobby_item = new Hobby();
+            hobby_item = new Hobby;
 			hobby_item->set_hobby(m_hobby_list[i]);
 			hobby_item->set_target(m_hobby_line[i].m_target);
 			hobby_item->set_process(m_hobby_line[i].m_process);
-			hobby_item->set_point(m_hobby_line[i].m_process);
 			m_layout->addWidget(hobby_item);
 		}
 	}
@@ -181,7 +175,6 @@ void TodoList::clearlayout(layout_name name)
 
 void TodoList::savefile(QFile*& file, QStringList& contain, int flag_f)
 {
-	QString s;
 	file->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate);
 	QTextStream stream(file);
 	stream.setCodec("utf-8");
@@ -229,12 +222,10 @@ void TodoList::closeEvent(QCloseEvent* event)
 void TodoList::show_success()
 {
 	QString text;
-	for (auto i : m_record_list)
+	for (auto& i : m_record_list)
 	{
 		text += i + "\n";
 	}
-	//QMessageBox::aboutQt(this);
-	
 	QMessageBox::about(this, "你已经达成的习惯", text);
 }
 
@@ -268,7 +259,7 @@ void TodoList::on_btn_add_clicked()
 		{
 			return;
 		}
-		ListItem* item = new ListItem(m_layout);
+		ListItem* item = new ListItem;
 		item->set_lbl_content(content);
 
 		//保存并更新布局
@@ -284,7 +275,7 @@ void TodoList::on_btn_add_clicked()
 			return;
 		}
 		QStringList way = content.split(",");
-		Hobby* item = new Hobby(m_layout);
+		Hobby* item = new Hobby();
 		item->set_process(0);
 		if (way.size() <= 1)
 		{

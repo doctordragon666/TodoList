@@ -114,7 +114,7 @@ QPushButton:pressed {
           </property>
           <property name="icon">
            <iconset resource="TodoList.qrc">
-            <normaloff>:/TodoList/add_item.png</normaloff>:/TodoList/add_item.png</iconset>
+            <normaloff>:/src/addIcon</normaloff>:/src/addIcon</iconset>
           </property>
          </widget>
         </item>

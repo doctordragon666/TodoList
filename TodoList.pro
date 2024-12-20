@@ -16,7 +16,8 @@ RCC_DIR += .
 
 HEADERS += ./TodoList.h \
     ./Hobby.h \
-    ./ListItem.h
+    ./ListItem.h \
+    global.h
 SOURCES += ./Hobby.cpp \
     ./ListItem.cpp \
     ./TodoList.cpp \

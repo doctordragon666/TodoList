@@ -1,66 +1,133 @@
----
-typora-root-url: ./
----
-
 # TodoList项目开发文档
-
+[English Version](README_en.md)
 ### 项目介绍
 
-一个待办系统，分为三个部分
+一个待办系统，分为两个部分
 
 1. 待办功能
 2. 习惯功能
-3. 计划功能，开发中
 
+本项目2024年12月停止更新，更换了新的项目地址。[新项目地址Schedule](https://github.com/doctordragon666/Schedule)
 
+停更原因：
+1. 代码很混乱：qrc和代码设置样式表混在一起，类太多了。
+2. 开发经验不足：走了很多弯路
+3. 程序的美术风格不统一
 
-### 主界面解析
+该项目的技术栈是QT+Visual Studio 2022。开发体验不好，而且属于小型项目。
+### 软件架构
 
-三个功能的大题布局一致，
+因为该项目已经弃用，尽可能的简化这个架构的设计，用来做参考。
 
-菜单栏设计了文件，成就两个菜单
+文件的详细信息在各个头文件中有说明，这里只简单列举一下项目文件
 
-右下角为`scrollarea`功能区
+```shell
+.
+│   .gitignore
+│   Hobby.cpp
+│   Hobby.h
+│   Hobby.ui
+│   LICENSE
+│   ListItem.cpp
+│   ListItem.h
+│   ListItem.ui
+│   main.cpp # 主程序入口
+│   TodoList.cpp
+│   TodoList.h
+│   TodoList.ui 
+│   TodoList.ico
+│   TodoList.pro
+│   TodoList.pro.user
+│   TodoList.qrc
+│   add_item.png
+└───example # 存放示例文件和程序运行图片
+        data.txt
+        hobby.txt
+        record.txt
+```
+关键的类图显示
+```mermaid
+classDiagram
+    class ListItem
+    class Hobby
+    class TodoList
+    TodoList <|-- Hobby
+    TodoList <|-- ListItem
+```
 
-设置左侧为`Listwidget`，然后将这个列表布局设置为`vboxlayout`布局，右侧为滚动条，禁用左右滚动。
+该项目中按钮样式所用的qss样式表
+```css
+QPushButton
+{
+    color:#ffffff; /*文字颜色*/
+    background-color:qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop:0 #aa55ff, stop: 1 #1296db);/*背景色*/
+    border-style:outset; /*边框风格*/
+    border-width:2px;/*边框宽度*/
+    border-color:#0055ff; /*边框颜色*/
+    border-radius:10px; /*边框倒角*/
+    font:bold 14px; /*字体*/
+    font-family: Segoe UI;
+    min-width:100px;/*控件最小宽度*/
+    min-height:20px;/*控件最小高度*/
+    padding:4px;/*内边距*/
+}
+ 
+QPushButton:hover
+{
+    color:#ffffff; /*文字颜色*/
+    background-color:qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop:0 #ff55ff, stop: 1 #1296db);/*背景色*/
+    border-style:outset; /*边框风格*/
+    border-width:2px;/*边框宽度*/
+    border-color:#0055ff; /*边框颜色*/
+    border-radius:10px; /*边框倒角*/
+    font:bold 14px; /*字体*/
+    font-family: Segoe UI;
+    min-width:100px;/*控件最小宽度*/
+    min-height:20px;/*控件最小高度*/
+    padding:4px;/*内边距*/
+}
+QPushButton:pressed
+{
+    color:#ffffff; /*文字颜色*/
+    background-color:qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop:0 #ff55ff, stop: 1 #aa00ff);/*背景色*/
+    border-style:outset; /*边框风格*/
+    border-width:2px;/*边框宽度*/
+    border-color:#0055ff; /*边框颜色*/
+    border-radius:10px; /*边框倒角*/
+    font:bold 14px; /*字体*/
+    font-family: Segoe UI;
+    min-width:100px;/*控件最小宽度*/
+    min-height:20px;/*控件最小高度*/
+    padding:4px;/*内边距*/
+}
+```
 
-右上角为一个起装饰作用的`qtoolbutton`，以及一个共同的添加按钮
+### 使用说明
 
-### 待办功能
+首先我们简单的看一下软件的界面
 
-每行以一个widget为主，类构造为listitem，继承为widget
+这是习惯的UI设计图
 
-功能的数据存放在`data.txt`中，文件命名因为属于早期，不便更改。
+![](/example/HobbyUI.png)
 
-| 功能           | 类名 | 下一步设想                                                   |
-| -------------- | ---- | ------------------------------------------------------------ |
-| 内容标签       |      | 双击可以修改                                                 |
-| 修改按钮       |      | 最近的更改为双击弹出的框有默认内容，后期可能不需要按钮，可以直接修改 |
-| 删除按钮       |      |                                                              |
-| 右键菜单开发中 |      | 方便删除，修改                                               |
+这是代办的UI设计图
 
-与待办功能相关的数据，类，方法
+![](/example/ListItemUI.png)
 
-| 数据 | 对应的变量名 |
-| ---- | ------------ |
-|      |              |
-|      |              |
-|      |              |
-|      |              |
+这是主界面的UI设计图
 
+![](/example/TodoListUI.png)
 
+这是程序实际运行的效果图
 
-### 习惯功能
+![](/example/runexample.png)
 
-跟待办的类结构一致
+每次使用前可能提示你需要重启程序，重启以后就可以使用了，文件下面有保存文件的按钮，点击修改可以更换代办的内容。
 
-| 功能              | 类名 | 下一步设想                                                   |
-| ----------------- | ---- | ------------------------------------------------------------ |
-| 提示习惯标签      |      |                                                              |
-| 进度条            |      |                                                              |
-| 可以控制的spinbox |      | 没有单位和上限提示，打算设计为只能加一次的盒子，判断加一次的条件，每过一个时间间隔没有加那么直接减一。 |
+下面有一个简单的运行实际效果
 
+![runeffect](/example/res.gif)
 
+### 许可证
 
-### 计划功能
-
+基于MIT许可证

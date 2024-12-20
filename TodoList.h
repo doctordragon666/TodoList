@@ -1,8 +1,24 @@
 #pragma once
 
+/****************************************************
+ * 文件说明：该文件是代办程序的主要核心代码，分为几个内容
+ * 上面的menubar菜单栏，有一个成就系统，保存已经完成的习惯
+ * 还有一个文件，可以保存结果（代码设计的失误，需要手动保存）
+ *
+ * 接下来分三个区域，一个区域是放置添加listitem, hobby子
+ * 类的按钮，另外一个区域是存放子类的列表，还有一个区域是为
+ * 了切换代办和习惯子类的一个listview
+ *
+ * 涉及了所有的文件，这些文件存放在example文件夹下
+ *
+ * 1. 读取保存文件
+ * 2. 监听关闭事件，提醒保存
+ * 3. 初始化存放子类的列表
+****************************************************/
+
+#include "global.h"
 #include <QtWidgets/QMainWindow>
 #include <QPushButton>
-#include <qlabel.h>
 #include <qlistwidget.h>
 #include <qstackedlayout.h>
 #include "ui_TodoList.h"
@@ -13,69 +29,27 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QDebug>
-
-struct todo_line
-{
-    int index;
-    QString todo;
-};//文件中todo_line
-
-struct hobby_line
-{
-    QString m_hobby;//习惯
-    int m_target;//习惯的坚持时间
-    int m_process;//目标当前进度
-    hobby_line(QString hobby, int target, int process) :m_hobby(hobby), m_target(target), m_process(process) {}
-};//文件中todo_list的每一行
-
-enum layout_name
-{
-    TODO,
-    HOBBY
-};
+#include <QLabel>
 
 class TodoList : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    TodoList(QWidget *parent = nullptr);
+    TodoList(QWidget* parent = nullptr);
     ~TodoList();
     bool loadfile(QFile*& file, QStringList& contain);
-    void initlayout(int choose);
-    /// <summary>
-    /// 清空布局
-    /// </summary>
-    /// <param name="choose">指定清空的布局</param>
-    void clearlayout(layout_name name);
-    /// <summary>
-    /// 保存文件
-    /// </summary>
-    /// <param name="file">保存的文件</param>
-    /// <param name="contain">保存内容的容器</param>
-    /// <param name="flag">标志，1表示默认待办</param>
     void savefile(QFile*& file, QStringList& contain, int flag = 1);
-    /// <summary>
-    /// 重载的退出事件，提示用户是否真退出
-    /// </summary>
-    /// <param name="event">事件句柄</param>
+
+    void initlayout(int choose);
+    void clearlayout(layout_name name);
+
     void closeEvent(QCloseEvent* event);
 private slots:
     void show_success();
-    /// <summary>
-    /// 确定删除，绑定了保存和退出事件
-    /// </summary>
     void sure_del();
-    /// <summary>
-    /// 根据当前的flag设置不同的添加界面
-    /// </summary>
     void on_btn_add_clicked();
-    /// <summary>
-    /// 找到这个item属于哪个标签，然后判断flag和choose是否相等
-    /// 如果相等则设置change=0，否则就将change设置为两者的差值，并且更新布局
-    /// </summary>
-    /// <param name="item"></param>
-    void on_list_choose_itemClicked(QListWidgetItem *item);
+    void on_list_choose_itemClicked(QListWidgetItem* item);
 
 private:
     Ui::TodoListClass ui;
@@ -88,11 +62,11 @@ private:
     QFile* m_src;//待办文件句柄
     QFile* m_hobby;//习惯文件句柄
     QFile* m_record;//记录文件句柄
-    const QString m_filename = "./data.txt";//默认的待办文件名
-    const QString m_hobby_file = "./hobby.txt";//默认的习惯文件名
-    const QString m_record_file = "./record.txt";//默认的记录文件名
+    const QString TODO_FILE = "./data.txt";//默认的待办文件名
+    const QString HOBBY_FILE = "./hobby.txt";//默认的习惯文件名
+    const QString RECORD_FILE = "./record.txt";//默认的记录文件名
 
-    QVBoxLayout* m_layout;//下方菜单布局
+    QVBoxLayout* m_layout;//内容（待办习惯）布局
     QStringList list_lbl_content = { "查看代办","养成习惯" };
     int flag = 0;//渲染那个布局，0待办，1习惯
 

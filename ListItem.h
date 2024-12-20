@@ -1,10 +1,12 @@
-#pragma once
+#ifndef LISTITEM_H
+#define LISTITEM_H
+
+/****************************************************
+ * 文件说明：该文件是TodoList的中的另一个list_item的填充物
+ * 仅能设置和获取标签内容，并且添加和删除代办。
+****************************************************/
 
 #include <QWidget>
-#include <qlayout.h>
-#include <qstring.h>
-#include <qfile.h>
-
 #include "ui_ListItem.h"
 
 class ListItem : public QWidget
@@ -12,11 +14,10 @@ class ListItem : public QWidget
 	Q_OBJECT
 
 public:
-	ListItem(QVBoxLayout* container=nullptr, QWidget *parent = nullptr);
+    ListItem(QWidget *parent = nullptr);
 	~ListItem();
 	void set_lbl_content(QString lblcontent);
 	QString get_lbl_content();
-	bool delete_flag = false;
 private slots:
     void on_btn_add_clicked();
 
@@ -24,5 +25,5 @@ private slots:
 
 private:
 	Ui::ListItemClass ui;
-	QVBoxLayout* m_container;
 };
+#endif

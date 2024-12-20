@@ -1,32 +1,27 @@
 #include "Hobby.h"
 
-Hobby::Hobby(QVBoxLayout* container, QWidget *parent)
+Hobby::Hobby(QWidget* parent)
 	: QWidget(parent)
 {
 	ui.setupUi(this);
-	m_container = container;
-	ui.process->setValue(10);
 }
 
 Hobby::~Hobby()
-{}
+{
+}
 
 void Hobby::set_hobby(QString hobby)
 {
 	ui.lbl_content->setText(hobby);
 }
 
-QString Hobby::get_hobby()
-{
-	return ui.lbl_content->text();
-}
-
 void Hobby::set_process(int now_process)
 {
 	ui.process->setValue(now_process);
+	ui.days->setValue(now_process);//同时设置spinbox的值
 }
 
-int Hobby::get_process()
+int Hobby::get_process() const
 {
 	return ui.days->value();
 }
@@ -34,12 +29,7 @@ int Hobby::get_process()
 void Hobby::set_target(int time)
 {
 	target = time;
-	ui.days->setMaximum(target);
-}
-
-void Hobby::set_point(int point)
-{
-	ui.days->setValue(point);
+	ui.days->setMaximum(time);
 }
 
 void Hobby::on_days_valueChanged(int arg1)

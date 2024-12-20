@@ -1,13 +1,10 @@
 #include "ListItem.h"
 #include <QInputDialog>
-#include <QLineEdit>
 
-ListItem::ListItem(QVBoxLayout* container, QWidget* parent)
+ListItem::ListItem(QWidget* parent)
 	: QWidget(parent)
 {
 	ui.setupUi(this);
-	ui.lbl_content->setText("加油读取QT教程");
-	m_container = container;
 }
 
 ListItem::~ListItem()
@@ -36,8 +33,5 @@ void ListItem::on_btn_add_clicked()
 
 void ListItem::on_btn_del_clicked()
 {
-	m_container->destroyed(this);
-	this->setParent(NULL);
-	this->deleteLater();
-	m_container->update();
+    deleteLater();
 }
