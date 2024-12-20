@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/qpushbutton.h>
+#include <QPushButton>
 #include <qlabel.h>
 #include <qlistwidget.h>
 #include <qstackedlayout.h>
@@ -9,6 +9,10 @@
 #include "Hobby.h"
 #include "ui_Hobby.h"
 #include <vector>
+#include <QInputDialog>
+#include <QMessageBox>
+#include <QFile>
+#include <QDebug>
 
 struct todo_line
 {

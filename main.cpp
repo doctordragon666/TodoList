@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "TodoList.h"
 #include <QtWidgets/QApplication>
 

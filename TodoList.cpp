@@ -1,6 +1,6 @@
-#include "stdafx.h"
 #include "TodoList.h"
 #include "ListItem.h"
+#include <QCloseEvent>
 #include "ui_ListItem.h"
 
 TodoList::TodoList(QWidget* parent)
@@ -81,7 +81,7 @@ bool TodoList::loadfile(QFile*& file, QStringList& contain)
 	//判断文件是否存在
 	if(!file->exists())
 	{
-		qDebug() << "file not exist" << endl;
+        qDebug() << "file not exist\n";
 		file->open(QIODevice::WriteOnly | QIODevice::Text);
 		file->close();
 		return false;

@@ -1,4 +1,3 @@
-#include "stdafx.h"
 #include "Hobby.h"
 
 Hobby::Hobby(QVBoxLayout* container, QWidget *parent)

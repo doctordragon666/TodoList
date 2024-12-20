@@ -8,12 +8,20 @@ TARGET = TodoList
 DESTDIR = ./x64/Release
 CONFIG += release
 LIBS += -L"."
-PRECOMPILED_HEADER = stdafx.h
 DEPENDPATH += .
 MOC_DIR += .
 OBJECTS_DIR += release
 UI_DIR += .
 RCC_DIR += .
-include(TodoList.pri)
-win32:RC_FILE = TodoList.rc
-RC_ICONS = TodoLists.ICON
+
+HEADERS += ./TodoList.h \
+    ./Hobby.h \
+    ./ListItem.h
+SOURCES += ./Hobby.cpp \
+    ./ListItem.cpp \
+    ./TodoList.cpp \
+    ./main.cpp
+FORMS += ./Hobby.ui \
+    ./ListItem.ui \
+    ./TodoList.ui
+RESOURCES += TodoList.qrc

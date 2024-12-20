@@ -1,5 +1,6 @@
-#include "stdafx.h"
 #include "ListItem.h"
+#include <QInputDialog>
+#include <QLineEdit>
 
 ListItem::ListItem(QVBoxLayout* container, QWidget* parent)
 	: QWidget(parent)
